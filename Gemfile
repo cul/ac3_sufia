@@ -33,6 +33,9 @@ gem 'blacklight', '~> 5.9.0'
 gem 'sufia', '6.0.0.rc4'
 gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'  # required to handle pagination properly in dashboard. See https://github.com/amatsuda/kaminari/pull/322
 
+# Fedora migration tool
+gem 'fedora-migrate'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
