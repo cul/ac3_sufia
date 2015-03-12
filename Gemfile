@@ -26,6 +26,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# Sufia is not yet compatible with Blacklight 5.10
+gem 'blacklight', '~> 5.9.0' 
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
