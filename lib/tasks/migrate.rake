@@ -8,9 +8,10 @@ namespace :ac3 do
       unless list && File.exists?(list)
         puts "usage: rake ac3:migrate:list list=LIST_PATH"
       else
-        open(list) do |blob|
-          blob.each {|line| puts line.strip}
-        end
+        migrator = Cul::Ac3::ListMigrator.new('ac', list:list)
+        migrator.migrate_objects
+        migrator.migrate_relationships # this is where we need to add DC and RELS-INT migration
+        migrator
       end
     end
   end

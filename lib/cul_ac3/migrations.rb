@@ -1,18 +1,18 @@
 require 'fedora-migrate'
 module Cul::Ac3::Migrations
   def self.sparql_outbound(subject, predicate)
-    <<-RELSEXT
+    <<-SPARQL
         SELECT ?pid FROM <#ri> WHERE {
           <#{subject}> <#{predicate}> ?pid 
         }
-      RELSEXT
+      SPARQL
   end
   def self.sparql_inbound(object, predicate)
-    <<-RELSEXT
+    <<-SPARQL
         SELECT ?pid FROM <#ri> WHERE {
           ?pid <#{predicate}> <#{object}> 
         }
-      RELSEXT
+      SPARQL
   end
   class DescMetadataMigration < FedoraMigrate::DatastreamMover
     MEMBER_OF = ::RDF::URI('http://purl.oclc.org/NET/CUL/memberOf')
