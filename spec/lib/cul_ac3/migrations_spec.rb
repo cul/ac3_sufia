@@ -1,6 +1,16 @@
 require 'spec_helper'
 require 'rubydora'
 describe Cul::Ac3::Migrations do
+  describe '#sparql_inbound' do
+    it do
+      expect(Cul::Ac3::Migrations.sparql_inbound('x','y')).to match(/\?pid \<y\> \<x\>/)
+    end
+  end
+  describe '#sparql_outbound' do
+    it do
+      expect(Cul::Ac3::Migrations.sparql_outbound('x','y')).to match(/\<x\> \<y\> \?pid/)
+    end
+  end
   describe Cul::Ac3::Migrations::DescMetadataMigration do
     let(:rubydora) { instance_double(FedoraMigrate::RubydoraConnection,connection: repository) }
     let(:repository) { double(Rubydora::Repository) }
@@ -17,7 +27,7 @@ describe Cul::Ac3::Migrations do
       descMetadata = instance_double("Attached File",original_name:'descMetadata.xml',mime_type:'text/nil',digest:'fakechecksum')
       target = instance_double("Target", attached_files: {'descMetadata' => descMetadata})
       desc_source = instance_double("Description Fedora 3 Object",:datastreams => {'CONTENT' => descDS})
-      allow(repository).to receive(:find_by_sparql_relationship).with('foo','http://purl.oclc.org/NET/CUL/metadataFor')
+      allow(repository).to receive(:find_by_sparql).with(Cul::Ac3::Migrations.sparql_inbound('foo','http://purl.oclc.org/NET/CUL/metadataFor'))
         .and_return([desc_source])
       allow(descMetadata).to receive(:original_name=)
       expect(descMetadata).to receive(:mime_type=).with('text/nil')
