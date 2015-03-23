@@ -38,8 +38,14 @@ module Cul::Ac3::Migrations
     end
   end
   class ListMigrator < FedoraMigrate::RepositoryMigrator
-    def source_objects
+    def get_source_objects
       # read off a list of PIDs
+      list = options[:list]
+      if list
+        File.foreach(list).lazy.map(&:chomp).map {|id| FedoraMigrate.source.connection.find(id)}
+      else
+        []
+      end
     end
     def migrate_object source, target_class=GenericWork,conversions=nil
       conversions ||= {'descMetadata'=>DescMetadataMigration}
