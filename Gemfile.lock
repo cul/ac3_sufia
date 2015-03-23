@@ -1,4 +1,14 @@
 GIT
+  remote: git://github.com/barmintor/fedora-migrate.git
+  revision: 45c3fd945f5c478204811ed09305096da9610f94
+  branch: content-converter
+  specs:
+    fedora-migrate (0.1.0)
+      hydra-head (~> 9.0)
+      rchardet
+      rubydora (~> 1.8)
+
+GIT
   remote: git://github.com/harai/kaminari.git
   revision: 384fcb5d11b66a0cc8fad030104bf80f82616355
   branch: route_prefix_prototype
@@ -162,10 +172,6 @@ GEM
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     fastercsv (1.5.5)
-    fedora-migrate (0.1.0)
-      hydra-head (~> 9.0)
-      rchardet
-      rubydora (~> 1.8)
     ffi (1.9.6)
     font-awesome-rails (4.3.0.0)
       railties (>= 3.2, < 5.0)
@@ -605,7 +611,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   devise
   devise-guests (~> 0.3)
-  fedora-migrate
+  fedora-migrate!
   jbuilder (~> 2.0)
   jettywrapper
   jquery-rails

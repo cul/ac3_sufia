@@ -34,7 +34,7 @@ gem 'sufia', '6.0.0.rc4'
 gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'  # required to handle pagination properly in dashboard. See https://github.com/amatsuda/kaminari/pull/322
 
 # Fedora migration tool
-gem 'fedora-migrate'
+gem 'fedora-migrate', github: "barmintor/fedora-migrate", branch: 'content-converter'
 
 # Use Unicorn as the app server
 # gem 'unicorn'

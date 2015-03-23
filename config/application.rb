@@ -6,7 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Ac3Sufia
+module Ac3
   class Application < Rails::Application
     
     config.generators do |g|
