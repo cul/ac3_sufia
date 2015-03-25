@@ -127,7 +127,24 @@ Sufia.config do |config|
   # config.translate_uri_to_id = lambda { |uri| uri.to_s.split('/')[-1] }
   # config.translate_id_to_uri = lambda { |id|
   #      "#{ActiveFedora.fedora.host}#{ActiveFedora.fedora.base_path}/#{Sufia::Noid.treeify(id)}" }
-
+  config.translate_uri_to_id = lambda do |uri|
+    uri = uri.to_s.sub("#{ActiveFedora.fedora.host}#{ActiveFedora.fedora.base_path}/",'')
+    parts = uri.split('/')
+    if parts.first =~ /^fedora\:/
+      ns = parts.first.sub('fedora:','')
+      "#{ns}:#{parts[-1]}"
+    else
+      parts[-1]
+    end
+  end
+  config.translate_id_to_uri = lambda do |id|
+    parts = id.split(':')
+    if parts.size ==2
+      "#{ActiveFedora.fedora.host}#{ActiveFedora.fedora.base_path}/fedora:#{parts[0]}/#{Sufia::Noid.treeify(parts[1])}"
+    else
+      "#{ActiveFedora.fedora.host}#{ActiveFedora.fedora.base_path}/#{Sufia::Noid.treeify(id)}"
+    end
+  end
   # If browse-everything has been configured, load the configs.  Otherwise, set to nil.
   begin
     if defined? BrowseEverything
