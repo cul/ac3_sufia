@@ -26,11 +26,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Sufia is not yet compatible with Blacklight 5.10
-gem 'blacklight', '~> 5.9.0'
-
 # Sufia
-gem 'sufia', '6.0.0.rc4'
+gem 'sufia', github: 'cul/sufia', branch:'generic_works' # fork form master
+
 gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'  # required to handle pagination properly in dashboard. See https://github.com/amatsuda/kaminari/pull/322
 
 # Fedora migration tool
