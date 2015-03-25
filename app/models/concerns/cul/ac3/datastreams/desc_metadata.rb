@@ -5,10 +5,11 @@ class Cul::Ac3::Datastreams::DescMetadata < ::ActiveFedora::File
     Nokogiri::XML::Document.parse("<mods xmlns='http://www.loc.gov/mods/v3' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd' version='3.5'>")
   end
   def to_solr(solr_doc={}, opts={})
-    keys = [:resource_type, :title, :creator, :contributor, :description, :tag, :rights,
+    texts = [:resource_type, :title, :creator, :contributor, :description, :tag, :rights,
        :publisher, :date_created, :subject, :language, :identifier, :based_near, :related_url]
-
-    keys.each do |key|
+    facets = [:resource_type, :title, :creator, :contributor, :tag, :publisher, :subject,
+       :language, :based_near]
+    texts.each do |key|
       fname = "#{key}_tesim" # + solr_name(key.to_s, :stored_searchable)
       solr_doc[fname] ||= []
       if (vals = self.send(key))
@@ -19,6 +20,18 @@ class Cul::Ac3::Datastreams::DescMetadata < ::ActiveFedora::File
         end
       end
     end
+    facets.each do |key|
+      fname = "#{key}_sim" # + solr_name(key.to_s, :stored_searchable)
+      solr_doc[fname] ||= []
+      if (vals = self.send(key))
+        if Array === vals
+          solr_doc[fname] += vals
+        else
+          solr_doc[fname] = vals
+        end
+      end
+    end
+    solr_doc[Solrizer.solr_name('title')] = title
     solr_doc
   end
 
@@ -29,7 +42,7 @@ class Cul::Ac3::Datastreams::DescMetadata < ::ActiveFedora::File
     ng_xml.xpath('mods:mods/mods:titleInfo', MODSNS).map {|n| n.text.strip}.first
   end
   def label
-    title.first
+    title
   end
   def creator
     ng_xml.xpath("mods:mods/mods:name/mods:role/mods:roleTerm[normalize-space(.)='author']", MODSNS).collect do|r|
