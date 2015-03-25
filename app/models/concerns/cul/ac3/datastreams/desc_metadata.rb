@@ -39,7 +39,7 @@ class Cul::Ac3::Datastreams::DescMetadata < ::ActiveFedora::File
     ng_xml.xpath('mods:mods/mods:genre', MODSNS).map {|n| n.text}
   end
   def title
-    ng_xml.xpath('mods:mods/mods:titleInfo', MODSNS).map {|n| n.text.strip}.first
+    ng_xml.xpath('mods:mods/mods:titleInfo', MODSNS).map {|n| n.text.strip}.first || "untitled"
   end
   def label
     title
